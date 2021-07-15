@@ -10,7 +10,9 @@ class NoteController extends Controller
 {
     function index()
     {
+        
         return view('note.form');
+
     }
 
     function saveNotes(Request $request)
@@ -63,13 +65,21 @@ class NoteController extends Controller
 
         //returning back to the another route
         return redirect()->route('notes.all');
+
     }
 
     function getNotes()
     {
 
         $notes = Note::get();
-        $count = 1;
-        return view('note.notes', ['notes' => $notes, 'count' => $count]);
+        return view('note.notes', ['notes' => $notes, 'count' => 1]);
+
+    }
+
+    function removeNote(Note $note){
+        
+        Note::where('id','=',$note->id)->delete();
+        return redirect()->route('notes.all');
+
     }
 }

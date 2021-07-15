@@ -29,6 +29,7 @@
                             <th scope="col">Note Title</th>
                             <th scope="col">Document</th>
                             <th scope="col">Helpful Link</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
 
@@ -57,6 +58,7 @@
                             <td class="down">{{$note->title}}</td>
                             <td class="down"><a href="{{ asset('/storage/docs').'/'.$note->document }}">{{ $note->document }}</a></td>
                             <td class="down"><a href="{{$note->link}}">{{$note->link}}</a></td>
+                            <td class="down"><a href="{{route('notes.remove',['note'=>$note->id])}}">Delete</a></td>
                         </tr>
                         @empty
                         <tr>
