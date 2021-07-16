@@ -36,17 +36,12 @@ class NoteController extends Controller
             //destination in storage folder
             $destination_path = 'public/docs';
 
-            //getting original name of file with extensiom
             $file  = $request->file('file')->getClientOriginalName();
             
-
-            //getting only original filename without extension
             $fname = pathinfo($file, PATHINFO_FILENAME);
             
-            //getting extension of file
             $file_ext = pathinfo($file, PATHINFO_EXTENSION);
             
-
             //modifying the name of the file with the current timestamp
             $file_name = str_replace(' ', '-',strtolower($request->title).$fname).time().'.'. $file_ext;
             
@@ -54,16 +49,12 @@ class NoteController extends Controller
             //saving file in the storage folder
             $path = $request->file('file')->storeAs($destination_path, $file_name);
 
-            //storage link is created for accessing the file from public folder using 'php artisan storage:link' command
-
-            //insertig in db field
             $note->document = $file_name;
         }
 
         //saving in db
         $note->save();
-
-        //returning back to the another route
+        
         return redirect()->route('notes.all');
 
     }
