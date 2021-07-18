@@ -56,7 +56,7 @@
                         <tr>
                             <td class="down">{{$count++}}</td>
                             <td class="down">{{$note->title}}</td>
-                            <td class="down"><a href="{{ asset('/storage/docs').'/'.$note->document }}">{{ $note->document }}</a></td>
+                            <td class="down"><a href="{{ asset('/storage/docs').'/'.$note->document }}" download>{{ $note->document }}</a></td>
                             <td class="down"><a href="{{$note->link}}">{{$note->link}}</a></td>
                             <td class="down"><a href="{{route('notes.remove',['note'=>$note->id])}}">Delete</a></td>
                         </tr>
