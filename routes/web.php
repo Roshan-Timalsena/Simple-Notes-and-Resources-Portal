@@ -24,6 +24,7 @@ Route::get('/dashboard', [NoteController::class, 'index'])->middleware(['auth'])
 Route::post('/dashboard/upload-notes', [NoteController::class, 'saveNotes'])->middleware(['auth'])->name('note.upload');
 Route::get('/notes', [NoteController::class, 'getNotes'])->middleware(['auth'])->name('notes.all');
 Route::get('/notes/delete/{note}', [NoteController::class, 'removeNote'])->middleware(['auth'])->name('notes.remove');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 
 //Route for linking storage to public folder in production stage
 // Route::get('/storage/docs/{note:document}', function(Note $note){

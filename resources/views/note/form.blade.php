@@ -18,13 +18,16 @@
 <body>
     <div class="container-fluid">
         <div class="container" style="margin-top: 90px;">
-            <a href="{{route('notes.all')}}"><button class="btn btn-primary">View All Notes And Resources</button></a>
-            <form action="{{route('note.upload')}}" method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
-                @if (Session::get('fail'))
-                    <div class="alert alert-danger">
-                        {{ Session::get('fail') }}
-                    </div>
-                @endif
+            <a href="{{ route('notes.all') }}"><button class="btn btn-primary">View All Notes And
+                    Resources</button></a>&nbsp; &nbsp;
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-primary">Logout</a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <form action="{{ route('note.upload') }}" method="POST" enctype="multipart/form-data"
+                style="margin-top: 20px;">
                 @csrf
                 <h2>Upload Notes and Resources</h2>
                 <br>
@@ -32,8 +35,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="title"><b>Note Title</b></label>
-                            <input type="text" name="title" class="form-control" placeholder="Note Title" id="note-title" value={{old('title')}}>
-                            <span class="text-danger">@error('title'){{$message}} @enderror</span>
+                            <input type="text" name="title" class="form-control" placeholder="Note Title"
+                                id="note-title" value={{ old('title') }}>
+                            <span class="text-danger">@error('title'){{ $message }} @enderror</span>
                         </div>
                     </div>
                 </div>
@@ -44,7 +48,7 @@
                         <div class="form-group">
                             <label for="file"><b>Upload File (PDF Only)</b></label>
                             <input type="file" name="file" class="form-control" id="file">
-                            <span class="text-danger">@error('file'){{$message}} @enderror</span>
+                            <span class="text-danger">@error('file'){{ $message }} @enderror</span>
                         </div>
                     </div>
                 </div>
@@ -55,8 +59,9 @@
 
                         <div class="form-group">
                             <label for="link"><b>Share Link</b></label>
-                            <input type="text" name="link" class="form-control" id="likn" placeholder="Share Link" value="{{old('link')}}">
-                            <span class="text-danger">@error('link'){{$message}} @enderror</span>
+                            <input type="text" name="link" class="form-control" id="likn" placeholder="Share Link"
+                                value="{{ old('link') }}">
+                            <span class="text-danger">@error('link'){{ $message }} @enderror</span>
                         </div>
                     </div>
                 </div>

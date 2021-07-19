@@ -17,7 +17,14 @@
 
 <body>
 
-    <a href="{{route('note.add')}}"><button class="btn btn-primary" style="margin-top: 50px; margin-left:120px;">Add New Notes and Resources</button></a>
+    <a href="{{ route('note.add') }}"><button class="btn btn-primary" style="margin-top: 50px; margin-left:120px;">Add
+            New Notes and Resources</button></a>&nbsp; &nbsp;
+    <a href="{{ route('logout') }}"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-primary" style="margin-top: 50px;">Logout</a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 
     <div class="container-fluid">
         <div class="jumbotron">
@@ -50,20 +57,23 @@
                             <td class="down">Some Link</td>
                         </tr>
                     </tbody> --}}
-                    
+
                     <tbody>
                         @forelse($notes as $note)
-                        <tr>
-                            <td class="down">{{$count++}}</td>
-                            <td class="down">{{$note->title}}</td>
-                            <td class="down"><a href="{{ asset('/storage/docs').'/'.$note->document }}" download>{{ $note->document }}</a></td>
-                            <td class="down"><a href="{{$note->link}}">{{$note->link}}</a></td>
-                            <td class="down"><a href="{{route('notes.remove',['note'=>$note->id])}}">Delete</a></td>
-                        </tr>
+                            <tr>
+                                <td class="down">{{ $count++ }}</td>
+                                <td class="down">{{ $note->title }}</td>
+                                <td class="down"><a href="{{ asset('/storage/docs') . '/' . $note->document }}"
+                                        download>{{ $note->document }}</a></td>
+                                <td class="down"><a href="{{ $note->link }}">{{ $note->link }}</a></td>
+                                <td class="down"><a
+                                        href="{{ route('notes.remove', ['note' => $note->id]) }}">Delete</a>
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td class="down"> NO Notes Yet</td>
-                        </tr>
+                            <tr>
+                                <td class="down"> NO Notes Yet</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
