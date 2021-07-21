@@ -26,10 +26,14 @@ Route::get('/notes', [NoteController::class, 'getNotes'])->middleware(['auth'])-
 Route::get('/notes/delete/{note}', [NoteController::class, 'removeNote'])->middleware(['auth'])->name('notes.remove');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 
-//Route for linking storage to public folder in production stage
-// Route::get('/storage/docs/{note:document}', function(Note $note){
-//     Artisan::call('storage:link');
-//     return redirect("/storage/docs/$note");
-// });
+/*
+|--------------------------------------------------------------------------
+| Route for linking storage to public folder in production stage
+|--------------------------------------------------------------------------
+|
+*/
 
+// Route::get('/lorem', function(){
+//     Artisan::call('storage:link');
+// });
 require __DIR__.'/auth.php';
