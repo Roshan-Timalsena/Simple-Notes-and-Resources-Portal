@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [NoteController::class, 'index'])->middleware(['auth'])->name('note.add');
 Route::post('/dashboard/upload-notes', [NoteController::class, 'saveNotes'])->middleware(['auth'])->name('note.upload');
-Route::get('/notes', [NoteController::class, 'getNotes'])->middleware(['auth'])->name('notes.all');
+Route::get('/notes', [NoteController::class, 'getNotes'])->name('notes.all');
 Route::get('/notes/delete/{note}', [NoteController::class, 'removeNote'])->middleware(['auth'])->name('notes.remove');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
 
