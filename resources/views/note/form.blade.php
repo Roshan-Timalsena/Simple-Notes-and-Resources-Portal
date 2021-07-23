@@ -9,6 +9,9 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -19,6 +22,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .bg-black {
             background-color: #000000;
@@ -58,8 +62,7 @@
 <body class="jumbotron">
     <div class="container-fluid">
         <div class="container">
-            <form action="{{ route('note.upload') }}" method="POST" enctype="multipart/form-data"
-                style="margin-top: 20px;">
+            <form action="{{ route('note.upload') }}" class="dropzone" id="note-upload" method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
                 @csrf
                 <h2>Upload Notes and Resources</h2>
                 <br>
@@ -76,14 +79,23 @@
                 <br>
 
                 <div class="row">
+                    <div>
+                        <h3 class="text-center">Upload Files by Clicking Below</h3>
+                    </div>
+
+                    <div class="dz-default dz-message"><span>Drop Files Here</span></div>
+                </div>
+
+                {{-- <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="dropzone dz-clickable">
                             <label for="file"><b>Upload File (PDF Only)</b></label>
                             <input type="file" name="file" class="form-control" id="file">
+                            <div class="dz-default dz-message"><span>Drop Files Here</span></div>
                             <span class="text-danger">@error('file'){{ $message }} @enderror</span>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <br>
 
                 <div class="row">
