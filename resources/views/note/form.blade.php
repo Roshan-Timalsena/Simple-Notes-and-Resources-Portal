@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Note</title>
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css"
+        integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -22,7 +24,13 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"
+        integrity="sha512-VQQXLthlZQO00P+uEu4mJ4G4OAgqTtKG1hri56kQY1DtdLeIqhKUp9W/lllDDu3uN3SnUNawpW7lBda8+dSi7w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <style>
         .bg-black {
             background-color: #000000;
@@ -42,10 +50,10 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('note.add')}}">Upload <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ route('note.add') }}">Upload <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('notes.all')}}">View All Notes</a>
+                <a class="nav-link" href="{{ route('notes.all') }}">View All Notes</a>
             </li>
         </ul>
 
@@ -62,7 +70,8 @@
 <body class="jumbotron">
     <div class="container-fluid">
         <div class="container">
-            <form action="{{ route('note.upload') }}" class="dropzone" id="note-upload" method="POST" enctype="multipart/form-data" style="margin-top: 20px;">
+            <form action="{{ route('note.upload') }}" id="note" enctype="multipart/form-data" method="POST"
+                style="margin-top: 20px;">
                 @csrf
                 <h2>Upload Notes and Resources</h2>
                 <br>
@@ -70,37 +79,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="title"><b>Note Title</b></label>
-                            <input type="text" name="title" class="form-control" placeholder="Note Title"
-                                id="note-title" value={{ old('title') }}>
+                            <input type="text" name="title" class="form-control" placeholder="Note Title" id="note-title" value={{ old('title') }}>
                             <span class="text-danger">@error('title'){{ $message }} @enderror</span>
                         </div>
                     </div>
                 </div>
-                <br>
-
-                <div class="row">
-                    <div>
-                        <h3 class="text-center">Upload Files by Clicking Below</h3>
-                    </div>
-
-                    <div class="dz-default dz-message"><span>Drop Files Here</span></div>
-                </div>
-
-                {{-- <div class="row">
-                    <div class="col-md-6">
-                        <div class="dropzone dz-clickable">
-                            <label for="file"><b>Upload File (PDF Only)</b></label>
-                            <input type="file" name="file" class="form-control" id="file">
-                            <div class="dz-default dz-message"><span>Drop Files Here</span></div>
-                            <span class="text-danger">@error('file'){{ $message }} @enderror</span>
-                        </div>
-                    </div>
-                </div> --}}
-                <br>
 
                 <div class="row">
                     <div class="col-md-6">
-
                         <div class="form-group">
                             <label for="link"><b>Share Link</b></label>
                             <input type="text" name="link" class="form-control" id="likn" placeholder="Share Link"
@@ -110,10 +96,45 @@
                     </div>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary">Share Now</button>
             </form>
+
+            <div style="width: 50%">
+                <h3 class="text-center">Click Below to Upload Files</h3>
+                <form action="{{ route('note.drop') }}" enctype="multipart/form-data" class="dropzone dz-clickable"
+                    id="file-upload">
+                    @csrf
+                    <div class="dz-default dz-message"><span>Or Drop Files Here...</span></div>
+                </form>
+            </div>
+            <br>
+            <button type="button" class="btn btn-primary" id="upload">Share Now</button>
+
+
         </div>
     </div>
 </body>
+
+<script>
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("#file-upload", {
+        url: "{{ route('note.upload') }}",
+        method:'POST',
+        parallelUploads: 3,
+        uploadMultiple: true,
+        acceptedFiles: '.pdf',
+        autoProcessQueue: false,
+        success: function(file, res){
+            if(res.message == 'success'){
+                window.location.href = "{{route('notes.all')}}";
+            }
+        }
+
+    });
+
+    $('#upload').click(function() {
+        $('#note').submit();
+        myDropzone.processQueue();
+    });
+</script>
 
 </html>
