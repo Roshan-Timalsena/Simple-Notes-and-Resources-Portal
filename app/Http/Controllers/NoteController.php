@@ -16,11 +16,20 @@ class NoteController extends Controller
 
     function saveFile(Request $request)
     {
+        $fileNames = '';
+        $files = $request->file('file');
+        $count = count($files);
+
+        for($i = 0; $i < $count; $i++){
+            $f = $files[$i]->getClientOriginalName();
+            $file = pathinfo($f, PATHINFO_FILENAME);
+            $ext = pathinfo($f, PATHINFO_EXTENSION);
+            $fname = $file .rand(). '.' . $ext;
+            $fileNames .= $fname;
+            $files[$i]->storeAs('/public/docs', $fname);
+        }
         
-        $file = $request->file('file');
-        $file_name = time() . $file->getClientOriginalName();
-        // $file->storeAs('public/docs', $file_name);
-        return response()->json(['success' => $file_name]);
+        return response()->json(['file' => $fileNames, 'message'=>'success']);
     }
 
     function saveNotes(Request $request)
@@ -30,7 +39,7 @@ class NoteController extends Controller
         //validating requests
         $request->validate([
             'title' => 'required|string|max:255',
-            'file' => 'required_if:link,null|file|nullable|max:10000|mimes:pdf',
+            'file' => 'required_if:link,null|nullable',
             'link' => "required_if:$request->file,null|nullable|url"
         ]);
 
@@ -38,18 +47,8 @@ class NoteController extends Controller
 
         $note->title = $request->title;
         $note->link = $request->link;
-
-        if($request->hasFile('file')){
-            $destination_path = 'public/docs';
-            $file  = $request->file('file')->getClientOriginalName();
-            $fname = pathinfo($file, PATHINFO_FILENAME);
-            $file_ext = pathinfo($file, PATHINFO_EXTENSION);
-            $file_name = str_replace(' ', '-', strtolower($request->title) . $fname) . rand() . '.' . $file_ext;
-            $path = $request->file('file')->storeAs($destination_path, $file_name);
-
-            $note->document = $file_name;
-            return response()->json(['success' => $file_name]);
-        }
+        $note->document = $request->file;
+        $note->save();
         return redirect()->route('notes.all');
     }
 

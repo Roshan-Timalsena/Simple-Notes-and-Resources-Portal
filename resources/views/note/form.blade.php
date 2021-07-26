@@ -100,7 +100,7 @@
 
             <div style="width: 50%">
                 <h3 class="text-center">Click Below to Upload Files</h3>
-                <form action="{{ route('note.drop') }}" enctype="multipart/form-data" class="dropzone dz-clickable"
+                <form method="POST" enctype="multipart/form-data" class="dropzone dz-clickable"
                     id="file-upload">
                     @csrf
                     <div class="dz-default dz-message"><span>Or Drop Files Here...</span></div>
@@ -117,15 +117,17 @@
 <script>
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("#file-upload", {
-        url: "{{ route('note.upload') }}",
+        url: "{{ route('note.drop') }}",
         method:'POST',
         parallelUploads: 3,
         uploadMultiple: true,
         acceptedFiles: '.pdf',
-        autoProcessQueue: false,
+        autoProcessQueue: true,
         success: function(file, res){
             if(res.message == 'success'){
-                window.location.href = "{{route('notes.all')}}";
+                let input = "<input type='text' name='file' style='display:none;' value='"+res.file+"'>";
+                $('#note').append(input);
+                // $('#note').submit();
             }
         }
 
@@ -133,7 +135,6 @@
 
     $('#upload').click(function() {
         $('#note').submit();
-        myDropzone.processQueue();
     });
 </script>
 
