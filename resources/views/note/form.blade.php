@@ -121,7 +121,8 @@
         method:'POST',
         parallelUploads: 3,
         uploadMultiple: true,
-        acceptedFiles: '.pdf',
+        acceptedFiles: '.pdf,.png,.jpg,.jpeg',
+        maxFilesize: 10,
         autoProcessQueue: true,
         success: function(file, res){
             if(res.message == 'success'){
