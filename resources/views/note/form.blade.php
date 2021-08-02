@@ -121,14 +121,13 @@
         method:'POST',
         parallelUploads: 3,
         uploadMultiple: true,
-        acceptedFiles: '.pdf,.png,.jpg,.jpeg',
+        acceptedFiles: '.pdf,.jpg,.png,.jpeg',
         maxFilesize: 10,
         autoProcessQueue: true,
         success: function(file, res){
             if(res.message == 'success'){
                 let input = "<input type='text' name='file' style='display:none;' value='"+res.file+"'>";
                 $('#note').append(input);
-                // $('#note').submit();
             }
         }
 

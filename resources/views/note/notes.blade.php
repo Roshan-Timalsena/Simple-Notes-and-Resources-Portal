@@ -74,8 +74,21 @@
                         <tr>
                             <td class="down">{{ $count++ }}</td>
                             <td class="down">{{ $note->title }}</td>
-                            <td class="down"><a href="{{ asset('/storage/docs') . '/' . $note->document }}"
-                                    download>{{ $note->document }}</a></td>
+
+                            @php
+                                $docs = $note->document;
+                                $new = explode(',', $docs);
+                            @endphp
+
+                            <td class="down">
+                            @foreach ($new as $n )
+                                <li style="list-style: none;">
+                                    <a href="{{ asset('/storage/docs') . '/' . $n }}"
+                                download>{{ $n }}</a>
+                                </li>
+                            @endforeach
+                            </td>
+
                             <td class="down"><a href="{{ $note->link }}">{{ $note->link }}</a></td>
                             <td class="down"><a href="{{ route('notes.remove', ['note' => $note->id]) }}">Delete</a>
                             </td>

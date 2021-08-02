@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class NoteController extends Controller
 {
@@ -20,23 +19,20 @@ class NoteController extends Controller
         $files = $request->file('file');
         $count = count($files);
 
-        for($i = 0; $i < $count; $i++){
+        for ($i = 0; $i < $count; $i++) {
             $f = $files[$i]->getClientOriginalName();
-            $file = pathinfo($f, PATHINFO_FILENAME);
             $ext = pathinfo($f, PATHINFO_EXTENSION);
-            $fname = $file .rand(). '.' . $ext;
-            $fileNames .= $fname;
+            $fname = pathinfo($f, PATHINFO_FILENAME) . time() . '.' . $ext;
             $files[$i]->storeAs('/public/docs', $fname);
+            $fileNames .= $fname . ',';
         }
-        
-        return response()->json(['file' => $fileNames, 'message'=>'success']);
+        return response()->json(['file' => $fileNames, 'message' => 'success']);
     }
 
     function saveNotes(Request $request)
     {
 
         // return $request;
-        //validating requests
         $request->validate([
             'title' => 'required|string|max:255',
             'file' => 'required_if:link,null|nullable',
