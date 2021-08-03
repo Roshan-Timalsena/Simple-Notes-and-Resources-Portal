@@ -35,8 +35,8 @@ class NoteController extends Controller
         // return $request;
         $request->validate([
             'title' => 'required|string|max:255',
-            'file' => 'required_if:link,null|nullable',
-            'link' => "required_if:$request->file,null|nullable|url"
+            'link' => "required_if:$request->file,null|nullable|url",
+            'file' => 'required_if:link,null|nullable'
         ]);
 
         $note = new Note;

@@ -36,6 +36,10 @@
             background-color: #000000;
         }
 
+        .pointer:hover {
+            cursor: pointer;
+        }
+
     </style>
 
 </head>
@@ -68,74 +72,77 @@
 </nav>
 
 <body class="jumbotron">
-    <div class="container-fluid">
+    <div class="container-fluid" align="center">
         <div class="container">
             <form action="{{ route('note.upload') }}" id="note" enctype="multipart/form-data" method="POST"
                 style="margin-top: 20px;">
                 @csrf
                 <h2>Upload Notes and Resources</h2>
                 <br>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="title"><b>Note Title</b></label>
-                            <input type="text" name="title" class="form-control" placeholder="Note Title" id="note-title" value={{ old('title') }}>
-                            <span class="text-danger">@error('title'){{ $message }} @enderror</span>
-                        </div>
+                <span class="text-danger">@error('file'){{ $message }}@enderror</span>
+                    <div class="form-group">
+                        <label for="title"><b>Note Title</b></label>
+                        <input type="text" name="title" class="form-control" placeholder="Note Title" id="note-title"
+                            value={{ old('title') }}>
+                        <span class="text-danger">@error('title'){{ $message }} @enderror</span>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="link"><b>Share Link</b></label>
-                            <input type="text" name="link" class="form-control" id="likn" placeholder="Share Link"
-                                value="{{ old('link') }}">
-                            <span class="text-danger">@error('link'){{ $message }} @enderror</span>
-                        </div>
+
+                    <div class="form-group">
+                        <label for="link"><b>Share Link</b></label>
+                        <input type="text" name="link" class="form-control" id="link" placeholder="Share Link"
+                            value="{{ old('link') }}">
+                        <span class="text-danger">@error('link'){{ $message }} @enderror</span>
                     </div>
+                    <br>
+                </form>
+
+                <div class="container">
+                    <h3 class="text-center">Upload Files</h3>
+                    <p class="text-center">Click The Check Mark After You have Selected All Files</p>
+                    <form method="POST" enctype="multipart/form-data" class="dropzone dz-clickable" id="file-upload">
+                        @csrf
+                        <div class="dz-default dz-message"><span>Or Drop Multiple Files Here...</span></div>
+                        <a id="queue" style="float: right;">
+                            <div class="dz-success-mark"><span>✔</span></div>
+                        </a>
+                    </form>
                 </div>
                 <br>
-            </form>
+                <button type="button" class="btn btn-primary" id="upload">Share Now</button>
 
-            <div style="width: 50%">
-                <h3 class="text-center">Click Below to Upload Files</h3>
-                <form method="POST" enctype="multipart/form-data" class="dropzone dz-clickable"
-                    id="file-upload">
-                    @csrf
-                    <div class="dz-default dz-message"><span>Or Drop Files Here...</span></div>
-                </form>
+
             </div>
-            <br>
-            <button type="button" class="btn btn-primary" id="upload">Share Now</button>
-
-
         </div>
-    </div>
-</body>
+    </body>
 
-<script>
-    Dropzone.autoDiscover = false;
-    var myDropzone = new Dropzone("#file-upload", {
-        url: "{{ route('note.drop') }}",
-        method:'POST',
-        parallelUploads: 3,
-        uploadMultiple: true,
-        acceptedFiles: '.pdf,.jpg,.png,.jpeg',
-        maxFilesize: 10,
-        autoProcessQueue: true,
-        success: function(file, res){
-            if(res.message == 'success'){
-                let input = "<input type='text' name='file' style='display:none;' value='"+res.file+"'>";
-                $('#note').append(input);
+    <script>
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("#file-upload", {
+            url: "{{ route('note.drop') }}",
+            method: 'POST',
+            parallelUploads: 3,
+            uploadMultiple: true,
+            acceptedFiles: '.pdf,.jpg,.png,.jpeg',
+            maxFilesize: 10,
+            autoProcessQueue: false,
+            success: function(file, res) {
+                if (res.message == 'success') {
+                    let input = "<input type='text' name='file' style='display:none;' value='" + res.file +
+                        "'>";
+                    $('#note').append(input);
+                }
             }
-        }
 
-    });
+        });
 
-    $('#upload').click(function() {
-        $('#note').submit();
-    });
-</script>
+        $('#queue').on('click', function() {
+            myDropzone.processQueue();
+        })
 
-</html>
+        $('#upload').on('click', function() {
+            $('#note').submit();
+        });
+    </script>
+
+    </html>
