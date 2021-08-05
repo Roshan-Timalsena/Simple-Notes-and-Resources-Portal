@@ -99,12 +99,12 @@
 
                 <div class="container">
                     <h3 class="text-center">Upload Files</h3>
-                    <p class="text-center">Click The Check Mark After You have Selected All Files</p>
+                    <p class="text-center">Click <strong>"Done"</strong> After You have Selected All Files</p>
                     <form method="POST" enctype="multipart/form-data" class="dropzone dz-clickable" id="file-upload">
                         @csrf
                         <div class="dz-default dz-message"><span>Or Drop Multiple Files Here...</span></div>
-                        <a id="queue" style="float: right;">
-                            <div class="dz-success-mark"><span>✔</span></div>
+                        <a id="queue" class="btn btn-warning" style="float: right;">
+                            Done
                         </a>
                     </form>
                 </div>
@@ -125,6 +125,7 @@
             uploadMultiple: true,
             acceptedFiles: '.pdf,.jpg,.png,.jpeg',
             maxFilesize: 10,
+            addRemoveLinks: true,
             autoProcessQueue: false,
             success: function(file, res) {
                 if (res.message == 'success') {
