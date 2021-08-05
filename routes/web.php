@@ -39,7 +39,7 @@ Route::post('/notes/drop', [NoteController::class, 'saveFile'])->middleware(['au
 |
 */
 
-// Route::get('/lorem', function(){
-//     Artisan::call('storage:link');
-// });
+Route::get('/lorem', function(){
+    Artisan::call('storage:link');
+});
 require __DIR__.'/auth.php';
