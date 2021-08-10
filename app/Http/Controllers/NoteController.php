@@ -22,7 +22,8 @@ class NoteController extends Controller
         for ($i = 0; $i < $count; $i++) {
             $f = $files[$i]->getClientOriginalName();
             $ext = pathinfo($f, PATHINFO_EXTENSION);
-            $fname = pathinfo($f, PATHINFO_FILENAME) . time() . '.' . $ext;
+            $name = pathinfo($f, PATHINFO_FILENAME);
+            $fname = str_replace(' ', '-',$name) . time() . '.' . $ext;
             $files[$i]->storeAs('/public/docs', $fname);
             $fileNames .= $fname . ',';
         }
